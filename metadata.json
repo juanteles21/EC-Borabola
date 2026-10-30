@@ -1,0 +1,6 @@
+{
+  "name": "EC Bora Bola — Escolinha de Futebol",
+  "description": "Landing page oficial da escolinha de futebol EC Bora Bola em Jacareí - SP, com informações das unidades Santa Maria e São João e canais diretos de contato.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}

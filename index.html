@@ -1,0 +1,1635 @@
+<!doctype html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>EC Bora Bola — Escolinha de Futebol</title>
+    <meta
+      name="description"
+      content="Landing page oficial da escolinha de futebol EC Bora Bola em Jacareí - SP, com informações das unidades Santa Maria e São João e canais diretos de contato."
+    />
+    <meta property="og:title" content="EC Bora Bola — Escolinha de Futebol" />
+    <meta
+      property="og:description"
+      content="Landing page oficial da escolinha de futebol EC Bora Bola em Jacareí - SP, com informações das unidades Santa Maria e São João e canais diretos de contato."
+    />
+    <meta property="og:type" content="website" />
+    <meta name="twitter:card" content="summary_large_image" />
+
+    <!-- Carregamento das 6 famílias tipográficas solicitadas via Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;700&family=Inter:wght@400;500;600&family=Montserrat:wght@800;900&family=Poppins:wght@600;700&family=Space+Grotesk:wght@600;700&family=Work+Sans:wght@600;700&display=swap"
+      rel="stylesheet"
+    />
+
+    <style>
+      /* ==========================================================================
+         PALETA DE CORES E SISTEMA TIPOGRÁFICO — EC BORA BOLA
+         Uso estrito de Amarelo (#FFD400) e Preto (#0A0A0A)
+         ========================================================================== */
+      :root {
+        --amarelo: #ffd400;
+        --preto: #0a0a0a;
+        --preto-cartao: rgba(10, 10, 10, 0.94);
+        --preto-menu-mobile: rgba(10, 10, 10, 0.96);
+        --amarelo-linha: rgba(255, 212, 0, 0.28);
+        --amarelo-grade: rgba(255, 212, 0, 0.14);
+
+        /* Funções tipográficas definidas */
+        --fonte-impacto: 'Montserrat', sans-serif; /* Títulos principais e frases da Home */
+        --fonte-cartao: 'Poppins', sans-serif; /* Títulos dos cartões e botões */
+        --fonte-menu: 'Space Grotesk', sans-serif; /* Menu e rótulos Unidade 1 / Unidade 2 */
+        --fonte-texto: 'Inter', sans-serif; /* Textos corridos e endereços */
+        --fonte-legenda: 'DM Sans', sans-serif; /* Textos secundários e legendas */
+        --fonte-contato: 'Work Sans', sans-serif; /* Número de WhatsApp e @ do Instagram */
+      }
+
+      *,
+      *::before,
+      *::after {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+      }
+
+      html {
+        scroll-behavior: smooth;
+        height: 100%;
+      }
+
+      /* ==========================================================================
+         BACKGROUND FIXO EM TODAS AS SEÇÕES
+         Mesma imagem em todo o site, cobrindo a tela inteira
+         ========================================================================== */
+      body {
+        min-height: 100dvh;
+        background-color: var(--preto);
+        background-image: url('/assets/aistudio/WhatsApp_Image_2026-10-28_at_21.36.57_0903e5f6.jpeg');
+        background-size: cover;
+        background-position: center;
+        background-attachment: fixed;
+        background-repeat: no-repeat;
+        color: var(--amarelo);
+        font-family: var(--fonte-texto);
+        line-height: 1.5;
+        overflow-x: hidden;
+        -webkit-font-smoothing: antialiased;
+      }
+
+      /* Logotipo recortado (sem o quadrado branco externo) fixo no centro do background
+         em todas as seções, posicionado abaixo da camada de contraste para integrar-se ao tecido */
+      .logo-background-centro {
+        position: fixed;
+        inset: 0;
+        z-index: 0;
+        pointer-events: none;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 24px;
+      }
+
+      .logo-background-centro img {
+        width: clamp(200px, 26vw, 370px);
+        max-height: 58dvh;
+        height: auto;
+        object-fit: contain;
+        user-select: none;
+        -webkit-user-drag: none;
+        /* Realce luminoso nas bordas do escudo + profundidade sobre o tecido */
+        filter:
+          brightness(1.06)
+          contrast(1.04)
+          drop-shadow(0 0 2px #fff799)
+          drop-shadow(0 0 7px rgba(255, 224, 51, 0.94))
+          drop-shadow(0 0 18px rgba(255, 212, 0, 0.58))
+          drop-shadow(0 12px 24px rgba(0, 0, 0, 0.58));
+        animation: deslizeLogoCentro 780ms cubic-bezier(0.22, 1, 0.36, 1) 90ms both;
+      }
+
+      /* Sobreposição escura sutil: mínima na Home para destacar o campo,
+         levemente reforçada em Unidades e Contato para leitura impecável */
+      .camada-contraste {
+        position: fixed;
+        inset: 0;
+        z-index: 1;
+        pointer-events: none;
+        background: linear-gradient(
+          180deg,
+          rgba(10, 10, 10, 0.48) 0%,
+          rgba(10, 10, 10, 0.05) 26%,
+          rgba(10, 10, 10, 0.05) 74%,
+          rgba(10, 10, 10, 0.52) 100%
+        );
+        transition: background 180ms ease;
+      }
+
+      body[data-secao-ativa='unidades'] .camada-contraste,
+      body[data-secao-ativa='contato'] .camada-contraste {
+        background: linear-gradient(
+          180deg,
+          rgba(10, 10, 10, 0.66) 0%,
+          rgba(10, 10, 10, 0.5) 50%,
+          rgba(10, 10, 10, 0.72) 100%
+        );
+      }
+
+      /* ==========================================================================
+         MENU FIXO NO TOPO (TRANSPARENTE / SEM BARRA SÓLIDA)
+         ========================================================================== */
+      .topo-menu {
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        z-index: 40;
+        background: transparent;
+        pointer-events: none;
+        animation: deslizeTopoBase 620ms cubic-bezier(0.22, 1, 0.36, 1) both;
+      }
+
+      .nav-desktop,
+      .btn-hamburguer,
+      .menu-mobile {
+        pointer-events: auto;
+      }
+
+      .topo-interno {
+        max-width: 1400px;
+        margin: 0 auto;
+        height: 76px;
+        padding: 0 32px;
+        display: flex;
+        align-items: center;
+        justify-content: flex-end;
+        gap: 24px;
+      }
+
+      /* Links do menu desktop */
+      .nav-desktop {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+      }
+
+      .link-secao {
+        appearance: none;
+        background: rgba(10, 10, 10, 0.38);
+        border: 2px solid transparent;
+        color: var(--amarelo);
+        font-family: var(--fonte-menu);
+        font-weight: 700;
+        font-size: 0.92rem;
+        letter-spacing: 0.08em;
+        text-transform: uppercase;
+        text-decoration: none;
+        padding: 8px 18px;
+        cursor: pointer;
+        transform: skewX(-10deg);
+        transition:
+          background-color 160ms ease,
+          color 160ms ease,
+          border-color 160ms ease,
+          transform 160ms ease;
+        white-space: nowrap;
+      }
+
+      .link-secao span {
+        display: inline-block;
+        transform: skewX(10deg);
+      }
+
+      .link-secao:hover {
+        background-color: var(--preto);
+        border-color: var(--amarelo);
+      }
+
+      .link-secao:focus-visible,
+      .btn-hamburguer:focus-visible,
+      .btn-mapa:focus-visible,
+      .btn-contato:focus-visible {
+        outline: 3px solid var(--amarelo);
+        outline-offset: 3px;
+      }
+
+      /* Indicação visual clara da seção ativa */
+      .link-secao.ativo,
+      .link-secao[aria-current='page'] {
+        background-color: var(--amarelo);
+        color: var(--preto);
+        border-color: var(--preto);
+        box-shadow: 4px 4px 0 var(--preto);
+      }
+
+      /* Botão hambúrguer compacto no celular */
+      .btn-hamburguer {
+        display: none;
+        align-items: center;
+        justify-content: center;
+        width: 44px;
+        height: 44px;
+        background-color: rgba(10, 10, 10, 0.86);
+        border: 2px solid var(--amarelo);
+        color: var(--amarelo);
+        cursor: pointer;
+        box-shadow: 3px 3px 0 var(--preto);
+        transition:
+          background-color 160ms ease,
+          color 160ms ease;
+      }
+
+      .btn-hamburguer:hover,
+      .btn-hamburguer[aria-expanded='true'] {
+        background-color: var(--amarelo);
+        color: var(--preto);
+      }
+
+      /* Menu mobile sobreposto à imagem */
+      .menu-mobile {
+        display: none;
+        position: fixed;
+        top: 68px;
+        left: 16px;
+        right: 16px;
+        z-index: 45;
+        background-color: var(--preto-menu-mobile);
+        border: 2px solid var(--amarelo);
+        box-shadow: 6px 6px 0 var(--amarelo);
+        padding: 12px;
+      }
+
+      .menu-mobile.aberto {
+        display: block;
+      }
+
+      .lista-mobile {
+        list-style: none;
+        display: flex;
+        flex-direction: column;
+        gap: 8px;
+      }
+
+      .link-mobile {
+        display: flex;
+        align-items: center;
+        justify-content: flex-start;
+        width: 100%;
+        padding: 12px 16px;
+        background-color: var(--preto);
+        border: 1.5px solid var(--amarelo-linha);
+        color: var(--amarelo);
+        font-family: var(--fonte-menu);
+        font-weight: 700;
+        font-size: 1rem;
+        letter-spacing: 0.08em;
+        text-transform: uppercase;
+        text-decoration: none;
+        transition:
+          background-color 150ms ease,
+          color 150ms ease;
+      }
+
+      .link-mobile.ativo,
+      .link-mobile[aria-current='page'] {
+        background-color: var(--amarelo);
+        color: var(--preto);
+        border-color: var(--amarelo);
+      }
+
+      /* ==========================================================================
+         ESTRUTURA PRINCIPAL E TRANSIÇÃO ENTRE AS 3 SEÇÕES
+         ========================================================================== */
+      main {
+        position: relative;
+        z-index: 5;
+        min-height: 100dvh;
+      }
+
+      .secao-pagina {
+        min-height: 100dvh;
+        width: 100%;
+        animation: entradaSecao 180ms cubic-bezier(0.16, 1, 0.3, 1);
+      }
+
+      .secao-pagina[hidden] {
+        display: none !important;
+      }
+
+      @keyframes entradaSecao {
+        from {
+          opacity: 0;
+          transform: translateY(6px);
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+
+      /* ==========================================================================
+         SEÇÃO 1: HOME
+         Mínimo de elementos para destacar o campo ao fundo.
+         Apenas as duas frases de impacto nos cantos opostos, com deslize de cima para baixo.
+         ========================================================================== */
+      #home {
+        max-width: 1400px;
+        margin: 0 auto;
+        padding: 34px 32px 32px;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        animation: none;
+      }
+
+      .placa-esportiva {
+        display: inline-flex;
+        flex-direction: column;
+        max-width: min(100%, 480px);
+      }
+
+      .placa-topo-esquerdo {
+        align-self: flex-start;
+        align-items: flex-start;
+      }
+
+      .placa-base-direito {
+        align-self: flex-end;
+        align-items: flex-end;
+        text-align: right;
+      }
+
+      .faixa-placa {
+        --inclinacao-placa: -10deg;
+        position: relative;
+        display: inline-block;
+        font-family: var(--fonte-impacto);
+        font-weight: 900;
+        font-size: clamp(1.45rem, 3vw, 2.7rem);
+        line-height: 1.04;
+        letter-spacing: -0.02em;
+        text-transform: uppercase;
+        padding: 7px 18px;
+        transform: skewX(var(--inclinacao-placa));
+        white-space: nowrap;
+      }
+
+      #home .placa-topo-esquerdo .faixa-placa:nth-child(1) {
+        animation: deslizeFaixaHome 700ms cubic-bezier(0.22, 1, 0.36, 1) 80ms both;
+      }
+
+      #home .placa-topo-esquerdo .faixa-placa:nth-child(2) {
+        animation: deslizeFaixaHome 700ms cubic-bezier(0.22, 1, 0.36, 1) 180ms both;
+      }
+
+      #home .placa-base-direito .faixa-placa:nth-child(1) {
+        animation: deslizeFaixaHome 720ms cubic-bezier(0.22, 1, 0.36, 1) 280ms both;
+      }
+
+      #home .placa-base-direito .faixa-placa:nth-child(2) {
+        animation: deslizeFaixaHome 720ms cubic-bezier(0.22, 1, 0.36, 1) 380ms both;
+      }
+
+      @keyframes deslizeTopoBase {
+        from {
+          opacity: 0;
+          transform: translate3d(0, -44px, 0);
+        }
+        to {
+          opacity: 1;
+          transform: translate3d(0, 0, 0);
+        }
+      }
+
+      @keyframes deslizeLogoCentro {
+        from {
+          opacity: 0;
+          transform: translate3d(0, -56px, 0);
+        }
+        to {
+          opacity: 1;
+          transform: translate3d(0, 0, 0);
+        }
+      }
+
+      @keyframes deslizeFaixaHome {
+        from {
+          opacity: 0;
+          transform: translate3d(0, -60px, 0) skewX(var(--inclinacao-placa, -10deg));
+        }
+        to {
+          opacity: 1;
+          transform: translate3d(0, 0, 0) skewX(var(--inclinacao-placa, -10deg));
+        }
+      }
+
+      .faixa-placa span {
+        display: inline-block;
+        transform: skewX(calc(var(--inclinacao-placa) * -1));
+      }
+
+      .faixa-escura {
+        background-color: var(--preto);
+        color: var(--amarelo);
+        border: 2px solid var(--amarelo);
+        box-shadow: 5px 5px 0 var(--preto);
+        z-index: 2;
+      }
+
+      .faixa-amarela {
+        background-color: var(--amarelo);
+        color: var(--preto);
+        border: 2px solid var(--preto);
+        box-shadow: 6px 6px 0 var(--preto);
+        margin-top: -2px;
+        z-index: 1;
+      }
+
+      /* ==========================================================================
+         CABEÇALHO DE ESTÁDIO (COMPARTILHADO POR UNIDADES E CONTATO)
+         ========================================================================== */
+      .conteudo-secao {
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 92px 24px 48px;
+      }
+
+      #unidades .conteudo-secao {
+        max-width: 1380px;
+      }
+
+      .cabecalho-estadio {
+        display: flex;
+        align-items: flex-end;
+        justify-content: space-between;
+        gap: 20px;
+        padding-bottom: 14px;
+        margin-bottom: 26px;
+        border-bottom: 3px solid var(--amarelo);
+      }
+
+      .titulo-secao {
+        font-family: var(--fonte-impacto);
+        font-weight: 900;
+        font-size: clamp(1.85rem, 3.2vw, 2.75rem);
+        line-height: 1.05;
+        letter-spacing: -0.01em;
+        text-transform: uppercase;
+        color: var(--amarelo);
+        text-shadow: 3px 3px 0 var(--preto);
+      }
+
+      /* ==========================================================================
+         SEÇÃO 2: UNIDADES
+         Dois cartões lado a lado no desktop, empilhados no celular
+         ========================================================================== */
+      .grade-unidades {
+        display: grid;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 28px;
+        align-items: stretch;
+      }
+
+      .cartao-unidade {
+        background-color: var(--preto-cartao);
+        border: 2px solid var(--amarelo);
+        box-shadow: 6px 6px 0 var(--preto);
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        position: relative;
+      }
+
+      .cartao-unidade > div:first-child {
+        display: flex;
+        flex-direction: column;
+        flex: 1;
+      }
+
+      /* Faixa diagonal esportiva no topo do cartão */
+      .faixa-topo-cartao {
+        height: 8px;
+        width: 100%;
+        background: repeating-linear-gradient(
+          -45deg,
+          var(--amarelo) 0,
+          var(--amarelo) 12px,
+          var(--preto) 12px,
+          var(--preto) 24px
+        );
+        border-bottom: 2px solid var(--amarelo);
+      }
+
+      .corpo-cartao {
+        padding: 22px;
+        display: flex;
+        flex-direction: column;
+        gap: 16px;
+        flex: 1;
+      }
+
+      .topo-placar-cartao {
+        display: flex;
+        align-items: center;
+        justify-content: flex-start;
+        padding-bottom: 12px;
+        border-bottom: 1px solid var(--amarelo-linha);
+      }
+
+      .rotulo-unidade {
+        display: inline-block;
+        background-color: var(--amarelo);
+        color: var(--preto);
+        font-family: var(--fonte-menu);
+        font-weight: 700;
+        font-size: 0.85rem;
+        letter-spacing: 0.08em;
+        text-transform: uppercase;
+        padding: 4px 12px;
+        transform: skewX(-10deg);
+      }
+
+      .rotulo-unidade span {
+        display: inline-block;
+        transform: skewX(10deg);
+      }
+
+      .titulo-unidade {
+        font-family: var(--fonte-cartao);
+        font-weight: 700;
+        font-size: 1.55rem;
+        line-height: 1.2;
+        color: var(--amarelo);
+      }
+
+      .bloco-endereco {
+        display: flex;
+        flex-direction: column;
+      }
+
+      .texto-endereco {
+        font-family: var(--fonte-texto);
+        font-weight: 500;
+        font-size: 0.98rem;
+        line-height: 1.5;
+        color: var(--amarelo);
+      }
+
+      /* Galeria ampla com fotos grandes e bem visíveis em proporção 4:3 */
+      .bloco-galeria {
+        display: flex;
+        flex-direction: column;
+        margin-top: auto;
+        padding-top: 6px;
+      }
+
+      .galeria-fotos {
+        display: grid;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 12px;
+      }
+
+      .galeria-fotos .foto-unidade:first-child {
+        grid-column: 1 / -1;
+      }
+
+      .foto-unidade {
+        width: 100%;
+        aspect-ratio: 4 / 3;
+        object-fit: cover;
+        border-radius: 4px;
+        border: 2px solid var(--amarelo);
+        display: block;
+        background-color: var(--preto);
+        cursor: zoom-in;
+        transition: transform 160ms ease;
+      }
+
+      .foto-unidade:hover {
+        transform: scale(1.015);
+      }
+
+      /* Modal discreto para visualização ampliada das fotos */
+      .modal-foto {
+        position: fixed;
+        inset: 0;
+        z-index: 80;
+        background-color: rgba(10, 10, 10, 0.92);
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        gap: 14px;
+        padding: 20px;
+      }
+
+      .modal-foto[hidden] {
+        display: none !important;
+      }
+
+      .modal-foto img {
+        max-width: min(94vw, 1040px);
+        max-height: 80dvh;
+        width: auto;
+        height: auto;
+        border: 2px solid var(--amarelo);
+        border-radius: 4px;
+        background-color: var(--preto);
+        box-shadow: 8px 8px 0 var(--preto);
+      }
+
+      .btn-fechar-foto {
+        background-color: var(--amarelo);
+        color: var(--preto);
+        border: 2px solid var(--amarelo);
+        font-family: var(--fonte-cartao);
+        font-weight: 700;
+        font-size: 0.88rem;
+        letter-spacing: 0.05em;
+        text-transform: uppercase;
+        padding: 8px 20px;
+        cursor: pointer;
+      }
+
+      .espaco-foto {
+        position: relative;
+        width: 100%;
+        aspect-ratio: 4 / 3;
+        border-radius: 4px; /* Bordas arredondadas leves */
+        border: 1.5px solid var(--amarelo);
+        background-color: var(--preto);
+        background-image:
+          linear-gradient(to right, var(--amarelo-grade) 1px, transparent 1px),
+          linear-gradient(to bottom, var(--amarelo-grade) 1px, transparent 1px);
+        background-size: 18px 18px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        gap: 6px;
+        padding: 8px;
+        text-align: center;
+        overflow: hidden;
+      }
+
+      /* Marcação de linha de grande área no fundo do espaço de foto */
+      .espaco-foto::before {
+        content: '';
+        position: absolute;
+        inset: 6px;
+        border: 1px solid var(--amarelo-linha);
+        border-radius: 2px;
+        pointer-events: none;
+      }
+
+      .indice-foto {
+        font-family: var(--fonte-legenda);
+        font-weight: 700;
+        font-size: 0.7rem;
+        font-variant-numeric: tabular-nums;
+        letter-spacing: 0.08em;
+        color: var(--preto);
+        background-color: var(--amarelo);
+        padding: 1px 6px;
+        position: relative;
+        z-index: 1;
+      }
+
+      .rotulo-foto {
+        font-family: var(--fonte-legenda);
+        font-weight: 700;
+        font-size: 0.78rem;
+        line-height: 1.2;
+        color: var(--amarelo);
+        position: relative;
+        z-index: 1;
+      }
+
+      /* Botão Ver no mapa */
+      .rodape-cartao {
+        padding: 0 24px 24px;
+      }
+
+      .btn-mapa {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        gap: 10px;
+        width: 100%;
+        padding: 13px 20px;
+        background-color: var(--amarelo);
+        color: var(--preto);
+        border: 2px solid var(--amarelo);
+        font-family: var(--fonte-cartao);
+        font-weight: 700;
+        font-size: 0.95rem;
+        letter-spacing: 0.05em;
+        text-transform: uppercase;
+        text-decoration: none;
+        white-space: nowrap;
+        cursor: pointer;
+        transition:
+          background-color 160ms ease,
+          color 160ms ease,
+          transform 160ms ease;
+      }
+
+      .btn-mapa:hover {
+        background-color: var(--preto);
+        color: var(--amarelo);
+        transform: translateY(-2px);
+      }
+
+      .btn-mapa svg {
+        width: 18px;
+        height: 18px;
+        flex-shrink: 0;
+      }
+
+      /* ==========================================================================
+         SEÇÃO 3: CONTATO
+         Estilo placar de estádio — WhatsApp e Instagram oficiais, sem formulário
+         ========================================================================== */
+      #contato {
+        display: flex;
+        align-items: center;
+      }
+
+      #contato .conteudo-secao {
+        width: 100%;
+      }
+
+      .placar-contato {
+        background-color: var(--preto-cartao);
+        border: 2px solid var(--amarelo);
+        box-shadow: 7px 7px 0 var(--preto);
+      }
+
+      .barra-placar-topo {
+        background-color: var(--amarelo);
+        color: var(--preto);
+        padding: 10px 24px;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 16px;
+        font-family: var(--fonte-menu);
+        font-weight: 700;
+        font-size: 0.84rem;
+        letter-spacing: 0.08em;
+        text-transform: uppercase;
+      }
+
+      .barra-placar-esq {
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+      }
+
+      .miolo-placar {
+        padding: 32px 28px;
+        display: flex;
+        flex-direction: column;
+        gap: 28px;
+      }
+
+      .intro-contato {
+        display: flex;
+        flex-direction: column;
+        gap: 8px;
+        max-width: 680px;
+      }
+
+      .texto-corrido-contato {
+        font-family: var(--fonte-texto);
+        font-weight: 400;
+        font-size: 1rem;
+        color: var(--amarelo);
+      }
+
+      .legenda-secundaria {
+        font-family: var(--fonte-legenda);
+        font-weight: 500;
+        font-size: 0.86rem;
+        color: var(--amarelo);
+        opacity: 0.84;
+      }
+
+      .grade-canais {
+        display: grid;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 24px;
+      }
+
+      .bloco-canal {
+        border: 2px solid var(--amarelo);
+        background-color: var(--preto);
+        padding: 24px;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        gap: 20px;
+        position: relative;
+      }
+
+      .cabecalho-canal {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 12px;
+        padding-bottom: 12px;
+        border-bottom: 1px solid var(--amarelo-linha);
+      }
+
+      .rotulo-canal {
+        font-family: var(--fonte-menu);
+        font-weight: 700;
+        font-size: 0.82rem;
+        letter-spacing: 0.09em;
+        text-transform: uppercase;
+        color: var(--amarelo);
+      }
+
+      .camisa-canal {
+        background-color: var(--amarelo);
+        color: var(--preto);
+        font-family: var(--fonte-menu);
+        font-weight: 700;
+        font-size: 0.78rem;
+        font-variant-numeric: tabular-nums;
+        padding: 2px 8px;
+      }
+
+      /* Work Sans exclusivamente para o número e o @ conforme especificado */
+      .dado-contato {
+        font-family: var(--fonte-contato);
+        font-weight: 700;
+        font-size: clamp(1.45rem, 2.5vw, 2rem);
+        line-height: 1.15;
+        letter-spacing: -0.01em;
+        font-variant-numeric: tabular-nums;
+        color: var(--amarelo);
+        word-break: break-word;
+      }
+
+      .descricao-canal {
+        font-family: var(--fonte-legenda);
+        font-weight: 400;
+        font-size: 0.88rem;
+        color: var(--amarelo);
+        opacity: 0.86;
+        margin-top: 6px;
+      }
+
+      .btn-contato {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        gap: 10px;
+        width: 100%;
+        padding: 14px 20px;
+        font-family: var(--fonte-cartao);
+        font-weight: 700;
+        font-size: 0.95rem;
+        letter-spacing: 0.04em;
+        text-transform: uppercase;
+        text-decoration: none;
+        white-space: nowrap;
+        border: 2px solid var(--amarelo);
+        cursor: pointer;
+        transition:
+          background-color 160ms ease,
+          color 160ms ease,
+          transform 160ms ease;
+      }
+
+      .btn-contato svg {
+        width: 20px;
+        height: 20px;
+        flex-shrink: 0;
+      }
+
+      .btn-amarelo {
+        background-color: var(--amarelo);
+        color: var(--preto);
+      }
+
+      .btn-amarelo:hover {
+        background-color: var(--preto);
+        color: var(--amarelo);
+        transform: translateY(-2px);
+      }
+
+      .btn-preto {
+        background-color: var(--preto);
+        color: var(--amarelo);
+      }
+
+      .btn-preto:hover {
+        background-color: var(--amarelo);
+        color: var(--preto);
+        transform: translateY(-2px);
+      }
+
+      /* Linha decorativa de meio-campo na base do placar */
+      .linha-meio-campo {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 12px 24px;
+        border-top: 1px solid var(--amarelo-linha);
+        gap: 12px;
+        font-family: var(--fonte-legenda);
+        font-size: 0.78rem;
+        letter-spacing: 0.06em;
+        text-transform: uppercase;
+        color: var(--amarelo);
+        opacity: 0.85;
+      }
+
+      /* ==========================================================================
+         RESPONSIVIDADE (CELULAR E TABLET)
+         ========================================================================== */
+      @media (max-width: 900px) {
+        .grade-unidades,
+        .grade-canais {
+          grid-template-columns: 1fr;
+        }
+
+        .icone-chuteira-topo {
+          display: none;
+        }
+      }
+
+      @media (max-width: 768px) {
+        .topo-interno {
+          height: 64px;
+          padding: 0 16px;
+        }
+
+        .nav-desktop {
+          display: none;
+        }
+
+        .btn-hamburguer {
+          display: inline-flex;
+        }
+
+        #home {
+          padding: 46px 16px 24px;
+        }
+
+        .logo-background-centro img {
+          width: min(60vw, 240px);
+          max-height: 44dvh;
+        }
+
+        .faixa-placa {
+          --inclinacao-placa: -7deg;
+          font-size: clamp(1.22rem, 5.8vw, 1.85rem);
+          padding: 6px 12px;
+        }
+
+        .conteudo-secao {
+          padding: 84px 16px 36px;
+        }
+
+        .corpo-cartao {
+          padding: 18px;
+        }
+
+        .rodape-cartao {
+          padding: 0 18px 18px;
+        }
+
+        .galeria-fotos {
+          grid-template-columns: 1fr;
+          gap: 12px;
+        }
+
+        .btn-contato,
+        .btn-mapa {
+          font-size: 0.88rem;
+          padding: 12px 16px;
+        }
+
+        .barra-placar-topo {
+          padding: 10px 16px;
+          font-size: 0.75rem;
+        }
+
+        .miolo-placar {
+          padding: 22px 18px;
+          gap: 22px;
+        }
+
+        .bloco-canal {
+          padding: 18px;
+        }
+      }
+
+      @media (prefers-reduced-motion: reduce) {
+        html {
+          scroll-behavior: auto;
+        }
+
+        .secao-pagina,
+        .topo-menu,
+        .logo-background-centro img,
+        #home .faixa-placa,
+        .link-secao,
+        .btn-mapa,
+        .btn-contato,
+        .foto-unidade,
+        .camada-contraste {
+          animation: none !important;
+          transition: none !important;
+        }
+      }
+    </style>
+  </head>
+  <body data-secao-ativa="home">
+    <!-- Logotipo recortado inserido ao centro do background em todo o site -->
+    <div class="logo-background-centro" aria-hidden="true">
+      <img
+        id="logo-fundo-central"
+        src="/assets/aistudio/logo-ec-borabola.png"
+        data-origem-remota="https://i.postimg.cc/tTnxzBZg/IMG-6476.jpg"
+        alt=""
+      />
+    </div>
+
+    <!-- Camada sutil de contraste sobre o background fixo -->
+    <div class="camada-contraste" aria-hidden="true"></div>
+
+    <!-- ========================================================================
+         MENU SUPERIOR FIXO (TRANSPARENTE SOBRE O CAMPO)
+         ======================================================================== -->
+    <header class="topo-menu">
+      <div class="topo-interno">
+        <!-- Menu Desktop -->
+        <nav class="nav-desktop" aria-label="Menu principal">
+          <a href="#home" class="link-secao ativo" data-alvo-secao="home" aria-current="page">
+            <span>Home</span>
+          </a>
+          <a href="#unidades" class="link-secao" data-alvo-secao="unidades">
+            <span>Unidades</span>
+          </a>
+          <a href="#contato" class="link-secao" data-alvo-secao="contato">
+            <span>Contato</span>
+          </a>
+        </nav>
+
+        <!-- Botão Hambúrguer para Celular -->
+        <button
+          type="button"
+          class="btn-hamburguer"
+          id="btn-hamburguer"
+          aria-expanded="false"
+          aria-controls="menu-mobile"
+          aria-label="Abrir menu de navegação"
+        >
+          <svg id="icone-abrir" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="square">
+            <line x1="3" y1="6" x2="21" y2="6" />
+            <line x1="3" y1="12" x2="21" y2="12" />
+            <line x1="3" y1="18" x2="21" y2="18" />
+          </svg>
+          <svg id="icone-fechar" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="square" style="display: none">
+            <line x1="5" y1="5" x2="19" y2="19" />
+            <line x1="19" y1="5" x2="5" y2="19" />
+          </svg>
+        </button>
+      </div>
+
+      <!-- Menu Compacto Mobile Sobreposto à Imagem -->
+      <nav class="menu-mobile" id="menu-mobile" aria-label="Menu principal móvel">
+        <ul class="lista-mobile">
+          <li>
+            <a href="#home" class="link-mobile ativo" data-alvo-secao="home" aria-current="page">
+              <span>Home</span>
+            </a>
+          </li>
+          <li>
+            <a href="#unidades" class="link-mobile" data-alvo-secao="unidades">
+              <span>Unidades</span>
+            </a>
+          </li>
+          <li>
+            <a href="#contato" class="link-mobile" data-alvo-secao="contato">
+              <span>Contato</span>
+            </a>
+          </li>
+        </ul>
+      </nav>
+    </header>
+
+    <main>
+      <!-- ======================================================================
+           SEÇÃO 1: HOME
+           Exibe exclusivamente as duas frases de impacto nos cantos opostos,
+           deixando a fotografia do campo em evidência total.
+           ====================================================================== -->
+      <section id="home" class="secao-pagina" aria-label="Home">
+        <!-- Canto superior esquerdo -->
+        <div class="placa-esportiva placa-topo-esquerdo">
+          <div class="faixa-placa faixa-escura">
+            <span>Aprenda com</span>
+          </div>
+          <div class="faixa-placa faixa-amarela">
+            <span>os maiores</span>
+          </div>
+        </div>
+
+        <!-- Canto inferior direito -->
+        <div class="placa-esportiva placa-base-direito">
+          <div class="faixa-placa faixa-escura">
+            <span>Jogue como</span>
+          </div>
+          <div class="faixa-placa faixa-amarela">
+            <span>os melhores</span>
+          </div>
+        </div>
+      </section>
+
+      <!-- ======================================================================
+           SEÇÃO 2: UNIDADES
+           Dois cartões lado a lado (empilhados no celular) com galeria 4:3 e mapa
+           ====================================================================== -->
+      <section id="unidades" class="secao-pagina" aria-labelledby="titulo-unidades" hidden>
+        <div class="conteudo-secao">
+          <div class="cabecalho-estadio">
+            <h1 id="titulo-unidades" class="titulo-secao">Unidades EC Bora Bola</h1>
+          </div>
+
+          <div class="grade-unidades">
+            <!-- ==================== UNIDADE 1: SANTA MARIA ==================== -->
+            <article class="cartao-unidade">
+              <div>
+                <div class="faixa-topo-cartao" aria-hidden="true"></div>
+                <div class="corpo-cartao">
+                  <div class="topo-placar-cartao">
+                    <span class="rotulo-unidade"><span>Unidade 1</span></span>
+                  </div>
+
+                  <h2 class="titulo-unidade">Unidade Santa Maria</h2>
+
+                  <div class="bloco-endereco">
+                    <p class="texto-endereco">
+                      Av. Santa Maria - Jardim Santa Maria, Jacareí - SP, 12328-350
+                    </p>
+                  </div>
+
+                  <div class="bloco-galeria">
+                    <div class="galeria-fotos">
+                      <!-- Fotos da Unidade 1 (Santa Maria) -->
+                      <img
+                        src="https://i.postimg.cc/LXG0yQxc/IMG-6479.jpg"
+                        alt="Unidade Santa Maria - Foto 1"
+                        class="foto-unidade"
+                        referrerpolicy="no-referrer"
+                        loading="lazy"
+                      />
+                      <img
+                        src="https://i.postimg.cc/yd2rfpfC/IMG-6480.jpg"
+                        alt="Unidade Santa Maria - Foto 2"
+                        class="foto-unidade"
+                        referrerpolicy="no-referrer"
+                        loading="lazy"
+                      />
+                      <img
+                        src="https://i.postimg.cc/50DkPKsr/IMG-6481.jpg"
+                        alt="Unidade Santa Maria - Foto 3"
+                        class="foto-unidade"
+                        referrerpolicy="no-referrer"
+                        loading="lazy"
+                      />
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="rodape-cartao">
+                <a
+                  href="https://www.google.com/maps/search/?api=1&query=Av.+Santa+Maria+-+Jardim+Santa+Maria%2C+Jacare%C3%AD+-+SP%2C+12328-350"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  class="btn-mapa"
+                  aria-label="Ver Unidade Santa Maria no mapa"
+                >
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="square" aria-hidden="true">
+                    <path d="M12 21s-7-6.2-7-11.5a7 7 0 0 1 14 0C19 14.8 12 21 12 21Z" />
+                    <circle cx="12" cy="9.5" r="2.5" />
+                  </svg>
+                  <span>Ver no mapa</span>
+                </a>
+              </div>
+            </article>
+
+            <!-- ==================== UNIDADE 2: SÃO JOÃO ==================== -->
+            <article class="cartao-unidade">
+              <div>
+                <div class="faixa-topo-cartao" aria-hidden="true"></div>
+                <div class="corpo-cartao">
+                  <div class="topo-placar-cartao">
+                    <span class="rotulo-unidade"><span>Unidade 2</span></span>
+                  </div>
+
+                  <h2 class="titulo-unidade">Unidade São João</h2>
+
+                  <div class="bloco-endereco">
+                    <p class="texto-endereco">
+                      Av. José Carlos Fernandes, 87 - Jardim Terras de Sao Joao, Jacareí - SP, 12324-784
+                    </p>
+                  </div>
+
+                  <div class="bloco-galeria">
+                    <div class="galeria-fotos">
+                      <!-- Fotos da Unidade 2 (São João) -->
+                      <img
+                        src="https://i.postimg.cc/SsHtZ1gw/IMG-6482.jpg"
+                        alt="Unidade São João - Foto 1"
+                        class="foto-unidade"
+                        referrerpolicy="no-referrer"
+                        loading="lazy"
+                      />
+                      <img
+                        src="https://i.postimg.cc/qqnDWcFY/IMG-6483.jpg"
+                        alt="Unidade São João - Foto 2"
+                        class="foto-unidade"
+                        referrerpolicy="no-referrer"
+                        loading="lazy"
+                      />
+                      <img
+                        src="https://i.postimg.cc/nr7SNK5b/IMG-6484.jpg"
+                        alt="Unidade São João - Foto 3"
+                        class="foto-unidade"
+                        referrerpolicy="no-referrer"
+                        loading="lazy"
+                      />
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="rodape-cartao">
+                <a
+                  href="https://www.google.com/maps/search/?api=1&query=Av.+Jos%C3%A9+Carlos+Fernandes%2C+87+-+Jardim+Terras+de+Sao+Joao%2C+Jacare%C3%AD+-+SP%2C+12324-784"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  class="btn-mapa"
+                  aria-label="Ver Unidade São João no mapa"
+                >
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="square" aria-hidden="true">
+                    <path d="M12 21s-7-6.2-7-11.5a7 7 0 0 1 14 0C19 14.8 12 21 12 21Z" />
+                    <circle cx="12" cy="9.5" r="2.5" />
+                  </svg>
+                  <span>Ver no mapa</span>
+                </a>
+              </div>
+            </article>
+          </div>
+        </div>
+      </section>
+
+      <!-- ======================================================================
+           SEÇÃO 3: CONTATO
+           Canais diretos (WhatsApp e Instagram) em placar esportivo, sem formulário
+           ====================================================================== -->
+      <section id="contato" class="secao-pagina" aria-labelledby="titulo-contato" hidden>
+        <div class="conteudo-secao">
+          <div class="placar-contato">
+            <div class="barra-placar-topo">
+              <span class="barra-placar-esq">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" aria-hidden="true">
+                  <circle cx="12" cy="12" r="9" />
+                  <polygon points="12,7.5 15.8,10.3 14.3,14.8 9.7,14.8 8.2,10.3" fill="currentColor" />
+                </svg>
+                <span>EC Bora Bola · Atendimento Direto</span>
+              </span>
+              <span>Jacareí — SP</span>
+            </div>
+
+            <div class="miolo-placar">
+              <div class="intro-contato">
+                <h1 id="titulo-contato" class="titulo-secao">Contato da Escolinha</h1>
+                <p class="texto-corrido-contato">
+                  Fale direto com a equipe do EC Bora Bola para horários de treino, faixas etárias e matrículas nas unidades Santa Maria e São João.
+                </p>
+                <span class="legenda-secundaria">
+                  Escolha um dos canais oficiais abaixo para abrir conversa direta.
+                </span>
+              </div>
+
+              <div class="grade-canais">
+                <!-- Canal WhatsApp -->
+                <div class="bloco-canal">
+                  <div>
+                    <div class="cabecalho-canal">
+                      <span class="rotulo-canal">WhatsApp Oficial</span>
+                    </div>
+                    <p class="dado-contato" style="margin-top: 14px">(12) 98831-7267</p>
+                    <p class="descricao-canal">
+                      Matrículas, horários das turmas e aulas experimentais.
+                    </p>
+                  </div>
+
+                  <a
+                    href="https://wa.me/5512988317267"
+                    target="_blank"
+                    rel="noopener"
+                    class="btn-contato btn-amarelo"
+                  >
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.1" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                      <path d="M21 11.5a8.5 8.5 0 0 1-12.6 7.4L3 20.5l1.7-5.2A8.5 8.5 0 1 1 21 11.5Z" />
+                      <path d="M9.4 8.8c.2-.4.4-.4.7-.4h.6c.2 0 .4.1.5.4l.7 1.7c.1.2.1.4-.1.6l-.5.6c-.1.2-.2.3 0 .6.3.6.9 1.3 1.6 1.8.8.5 1.3.6 1.6.7.2.1.4 0 .5-.1l.7-.8c.2-.2.4-.2.6-.1l1.6.8c.3.1.4.3.4.5 0 .6-.4 1.3-1 1.6-.6.3-1.4.4-2.4.1-2.5-.7-4.8-2.9-5.7-5.3-.4-1-.3-1.9.2-2.7Z" />
+                    </svg>
+                    <span>Chamar no WhatsApp</span>
+                  </a>
+                </div>
+
+                <!-- Canal Instagram -->
+                <div class="bloco-canal">
+                  <div>
+                    <div class="cabecalho-canal">
+                      <span class="rotulo-canal">Instagram Oficial</span>
+                    </div>
+                    <p class="dado-contato" style="margin-top: 14px">@ecborabola</p>
+                    <p class="descricao-canal">
+                      Dia a dia de treinos, jogos amistosos e comunicados de campo.
+                    </p>
+                  </div>
+
+                  <a
+                    href="https://www.instagram.com/ecborabola/"
+                    target="_blank"
+                    rel="noopener"
+                    class="btn-contato btn-preto"
+                  >
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.1" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                      <rect x="3" y="3" width="18" height="18" rx="4" />
+                      <circle cx="12" cy="12" r="4" />
+                      <circle cx="17.5" cy="6.5" r="1" fill="currentColor" stroke="none" />
+                    </svg>
+                    <span>Abrir Instagram</span>
+                  </a>
+                </div>
+              </div>
+            </div>
+
+            <div class="linha-meio-campo" aria-hidden="true">
+              <svg width="20" height="14" viewBox="0 0 28 18" fill="none" stroke="currentColor" stroke-width="1.8">
+                <rect x="1" y="1" width="26" height="16" />
+                <line x1="14" y1="1" x2="14" y2="17" />
+                <circle cx="14" cy="9" r="3.2" />
+              </svg>
+              <span>EC Bora Bola · Unidades Santa Maria &amp; São João</span>
+            </div>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <!-- Visualizador de foto ampliada ao clicar -->
+    <div id="modal-foto" class="modal-foto" role="dialog" aria-modal="true" aria-label="Foto ampliada da unidade" hidden>
+      <img id="modal-foto-img" src="" alt="" referrerpolicy="no-referrer" />
+      <button type="button" id="btn-fechar-foto" class="btn-fechar-foto">Fechar foto</button>
+    </div>
+
+    <!-- ========================================================================
+         JAVASCRIPT EMBUTIDO — NAVEGAÇÃO ENTRE SEÇÕES E MENU MOBILE
+         ======================================================================== -->
+    <script>
+      (function () {
+        var secoesValidas = ['home', 'unidades', 'contato'];
+        var linksNavegacao = document.querySelectorAll('[data-alvo-secao]');
+        var btnHamburguer = document.getElementById('btn-hamburguer');
+        var menuMobile = document.getElementById('menu-mobile');
+        var iconeAbrir = document.getElementById('icone-abrir');
+        var iconeFechar = document.getElementById('icone-fechar');
+
+        /* Define estado aberto/fechado do menu compacto no celular */
+        function definirMenuMobile(aberto) {
+          if (!btnHamburguer || !menuMobile) return;
+          btnHamburguer.setAttribute('aria-expanded', aberto ? 'true' : 'false');
+          btnHamburguer.setAttribute(
+            'aria-label',
+            aberto ? 'Fechar menu de navegação' : 'Abrir menu de navegação'
+          );
+          menuMobile.classList.toggle('aberto', aberto);
+          if (iconeAbrir && iconeFechar) {
+            iconeAbrir.style.display = aberto ? 'none' : 'block';
+            iconeFechar.style.display = aberto ? 'block' : 'none';
+          }
+        }
+
+        /* Troca para a seção escolhida, atualiza destaque ativo e oculta as demais */
+        function ativarSecao(idSecao, atualizarHistorico) {
+          var destino = secoesValidas.indexOf(idSecao) !== -1 ? idSecao : 'home';
+
+          /* Mostra apenas a seção ativa (garantindo que os textos da Home não vazem) */
+          for (var i = 0; i < secoesValidas.length; i++) {
+            var codigo = secoesValidas[i];
+            var elemento = document.getElementById(codigo);
+            if (elemento) {
+              if (codigo === destino) {
+                elemento.removeAttribute('hidden');
+              } else {
+                elemento.setAttribute('hidden', '');
+              }
+            }
+          }
+
+          /* Atualiza atributo no body para ajuste sutil de contraste sobre o fundo */
+          document.body.setAttribute('data-secao-ativa', destino);
+
+          /* Atualiza indicação visual de seção ativa no menu desktop e mobile */
+          for (var j = 0; j < linksNavegacao.length; j++) {
+            var link = linksNavegacao[j];
+            var alvo = link.getAttribute('data-alvo-secao');
+            var ehItemMenu =
+              link.classList.contains('link-secao') || link.classList.contains('link-mobile');
+
+            if (ehItemMenu) {
+              if (alvo === destino) {
+                link.classList.add('ativo');
+                link.setAttribute('aria-current', 'page');
+              } else {
+                link.classList.remove('ativo');
+                link.removeAttribute('aria-current');
+              }
+            }
+          }
+
+          /* Fecha o menu mobile e volta suavemente para o topo da visualização */
+          definirMenuMobile(false);
+          window.scrollTo({ top: 0, behavior: 'smooth' });
+
+          if (atualizarHistorico && window.location.hash !== '#' + destino) {
+            history.pushState(null, '', '#' + destino);
+          }
+        }
+
+        /* Obtém seção a partir do hash atual da URL */
+        function lerSecaoDaUrl() {
+          var hashLimpo = (window.location.hash || '').replace(/^#/, '').toLowerCase();
+          return secoesValidas.indexOf(hashLimpo) !== -1 ? hashLimpo : 'home';
+        }
+
+        /* Eventos de clique nos itens de navegação */
+        for (var k = 0; k < linksNavegacao.length; k++) {
+          linksNavegacao[k].addEventListener('click', function (evento) {
+            evento.preventDefault();
+            var secaoEscolhida = this.getAttribute('data-alvo-secao') || 'home';
+            ativarSecao(secaoEscolhida, true);
+          });
+        }
+
+        /* Evento do botão hambúrguer no celular */
+        if (btnHamburguer) {
+          btnHamburguer.addEventListener('click', function () {
+            var estaAberto = btnHamburguer.getAttribute('aria-expanded') === 'true';
+            definirMenuMobile(!estaAberto);
+          });
+        }
+
+        /* Fecha o menu mobile ao pressionar Escape ou clicar fora */
+        document.addEventListener('keydown', function (evento) {
+          if (evento.key === 'Escape') {
+            definirMenuMobile(false);
+          }
+        });
+
+        document.addEventListener('click', function (evento) {
+          if (!menuMobile || !btnHamburguer) return;
+          var clicouDentroMenu = menuMobile.contains(evento.target);
+          var clicouBotao = btnHamburguer.contains(evento.target);
+          if (!clicouDentroMenu && !clicouBotao) {
+            definirMenuMobile(false);
+          }
+        });
+
+        /* Sincroniza com botões Voltar/Avançar do navegador */
+        window.addEventListener('hashchange', function () {
+          ativarSecao(lerSecaoDaUrl(), false);
+        });
+
+        /* Fallback para uso do HTML isolado: caso o PNG transparente local não esteja disponível,
+           carrega https://i.postimg.cc/tTnxzBZg/IMG-6476.jpg e remove o fundo branco via Canvas */
+        var logoCentral = document.getElementById('logo-fundo-central');
+        if (logoCentral) {
+          logoCentral.addEventListener('error', function tentarRecorteRemoto() {
+            logoCentral.removeEventListener('error', tentarRecorteRemoto);
+            var urlRemota = logoCentral.getAttribute('data-origem-remota');
+            if (!urlRemota) return;
+            var img = new Image();
+            img.crossOrigin = 'anonymous';
+            img.onload = function () {
+              var w = img.naturalWidth;
+              var h = img.naturalHeight;
+              var canvas = document.createElement('canvas');
+              canvas.width = w;
+              canvas.height = h;
+              var ctx = canvas.getContext('2d');
+              if (!ctx) return;
+              ctx.drawImage(img, 0, 0);
+              var dados = ctx.getImageData(0, 0, w, h);
+              var d = dados.data;
+              var visitado = new Uint8Array(w * h);
+              var fila = new Int32Array(w * h);
+              var ini = 0;
+              var fim = 0;
+              function empilhar(indice) {
+                if (!visitado[indice]) {
+                  visitado[indice] = 1;
+                  fila[fim++] = indice;
+                }
+              }
+              for (var x = 0; x < w; x++) {
+                empilhar(x);
+                empilhar((h - 1) * w + x);
+              }
+              for (var y = 0; y < h; y++) {
+                empilhar(y * w);
+                empilhar(y * w + (w - 1));
+              }
+              while (ini < fim) {
+                var idx = fila[ini++];
+                var p = idx * 4;
+                if (!(d[p + 2] > 55 && d[p] > 90)) continue;
+                visitado[idx] = 2;
+                var cx = idx % w;
+                var cy = (idx / w) | 0;
+                if (cx > 0) empilhar(idx - 1);
+                if (cx < w - 1) empilhar(idx + 1);
+                if (cy > 0) empilhar(idx - w);
+                if (cy < h - 1) empilhar(idx + w);
+              }
+              for (var m = 0; m < w * h; m++) {
+                if (visitado[m] === 2) {
+                  var pos = m * 4;
+                  var alfa = (245 - d[pos + 2]) / (245 - 30);
+                  if (alfa <= 0.04) {
+                    d[pos + 3] = 0;
+                  } else {
+                    if (alfa > 1) alfa = 1;
+                    d[pos] = Math.max(0, Math.min(255, Math.round((d[pos] - (1 - alfa) * 255) / alfa)));
+                    d[pos + 1] = Math.max(0, Math.min(255, Math.round((d[pos + 1] - (1 - alfa) * 255) / alfa)));
+                    d[pos + 2] = Math.max(0, Math.min(255, Math.round((d[pos + 2] - (1 - alfa) * 255) / alfa)));
+                    d[pos + 3] = Math.round(alfa * 255);
+                  }
+                }
+              }
+              ctx.putImageData(dados, 0, 0);
+              logoCentral.src = canvas.toDataURL('image/png');
+            };
+            img.src = urlRemota;
+          });
+        }
+
+        /* Ampliação de foto ao clicar nas galerias das unidades */
+        var modalFoto = document.getElementById('modal-foto');
+        var modalFotoImg = document.getElementById('modal-foto-img');
+        var btnFecharFoto = document.getElementById('btn-fechar-foto');
+        var fotosUnidades = document.querySelectorAll('.foto-unidade');
+
+        function fecharModalFoto() {
+          if (!modalFoto || !modalFotoImg) return;
+          modalFoto.setAttribute('hidden', '');
+          modalFotoImg.src = '';
+          modalFotoImg.alt = '';
+        }
+
+        for (var f = 0; f < fotosUnidades.length; f++) {
+          fotosUnidades[f].addEventListener('click', function () {
+            if (!modalFoto || !modalFotoImg) return;
+            modalFotoImg.src = this.src;
+            modalFotoImg.alt = this.alt;
+            modalFoto.removeAttribute('hidden');
+          });
+        }
+
+        if (btnFecharFoto) {
+          btnFecharFoto.addEventListener('click', fecharModalFoto);
+        }
+
+        if (modalFoto) {
+          modalFoto.addEventListener('click', function (evento) {
+            if (evento.target === modalFoto) {
+              fecharModalFoto();
+            }
+          });
+        }
+
+        document.addEventListener('keydown', function (evento) {
+          if (evento.key === 'Escape') {
+            fecharModalFoto();
+          }
+        });
+
+        /* Inicialização na abertura da página */
+        ativarSecao(lerSecaoDaUrl(), false);
+      })();
+    </script>
+  </body>
+</html>
